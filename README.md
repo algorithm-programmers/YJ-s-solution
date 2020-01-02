@@ -1,1 +1,1 @@
-# YJ-s-solution
+# YJ respository
