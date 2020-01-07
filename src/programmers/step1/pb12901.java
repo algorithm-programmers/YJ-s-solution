@@ -1,4 +1,4 @@
-package step1;
+package programmers.step1;
 
 public class pb12901 {
 

@@ -1,4 +1,4 @@
-package step1;
+package programmers.step1;
 
 // 연습문제 > 가운데 글자 가져오기
 public class pb12903 {
