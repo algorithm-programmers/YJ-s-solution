@@ -1,4 +1,4 @@
-package step1;
+package programmers.step1;
 
 // 연습문제 > 문자열을 정수로 바꾸기
 public class pb12925 {

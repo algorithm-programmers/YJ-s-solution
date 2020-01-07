@@ -1,4 +1,4 @@
-package step1;
+package programmers.step1;
 
 // 연습문제 > 문자열 다루기 기본
 public class pb12918 {
