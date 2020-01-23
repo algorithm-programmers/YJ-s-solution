@@ -2,11 +2,7 @@ package programmers.step1;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 // 2019 KAKAO BLIND RECRUITMENT 실패율
 public class pb42889 {
@@ -21,7 +17,6 @@ public class pb42889 {
 	
 	//N: 스테이지 수 , stages : 게임을 하는 사용자가 멈춰있는 스테이지 번호 
 	 public static int[] solution(int N, int[] stages) {
-        int[] answer = new int[N];
         HashMap<Double, ArrayList<Integer>> map = new HashMap<>();
         
         double[] challenge = new double[N+1];// 스테이지에 도전한 유저수
@@ -43,6 +38,7 @@ public class pb42889 {
       //실패율 = STOP/PASS
         for(int i=0; i<N; i++) {
         	double fail = stop[i+1] / challenge[i+1];
+        	//System.out.println("i: " + (i+1) + " fail: " + fail);
         	ArrayList<Integer> list = new ArrayList<>();
         	if(map.containsKey(fail)){
         		list = map.get(fail);
@@ -52,21 +48,17 @@ public class pb42889 {
         		map.put(fail, list);
         	}
         }
-        
-        Set<Double> set = map.keySet();
-        Collections.sort(new ArrayList<>(set));
-        //Collections.reverse(new ArrayList<>(set));
         ArrayList<Integer> answerList = new ArrayList<>();
-
-        set.forEach(k-> {
+        ArrayList<Double> list = new ArrayList<>(map.keySet());
+        Collections.sort(list, Collections.reverseOrder());
+        list.forEach(k-> {
         	ArrayList<Integer> arr = map.get(k);
         	arr.forEach(val -> {
         		answerList.add(val);
-        		System.out.println("k: " + k + " val: " + val);
         	});
         });
-        
+          
         return answerList.stream().mapToInt(i -> i).toArray();
 	 }
-	
+	 
 }
