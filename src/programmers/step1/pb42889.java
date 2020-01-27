@@ -2,10 +2,7 @@ package programmers.step1;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 
 // 2019 KAKAO BLIND RECRUITMENT 실패율
 public class pb42889 {
@@ -20,75 +17,48 @@ public class pb42889 {
 	
 	//N: 스테이지 수 , stages : 게임을 하는 사용자가 멈춰있는 스테이지 번호 
 	 public static int[] solution(int N, int[] stages) {
-        int[] answer = new int[N];
-        HashMap<Integer, Double> map = new HashMap<>();
+        HashMap<Double, ArrayList<Integer>> map = new HashMap<>();
         
-        double[] pass = new double[N+1];// 스테이지를 통과한 유저수
+        double[] challenge = new double[N+1];// 스테이지에 도전한 유저수
         double[] stop = new double[N+1];// 멈춘 스테이지
         
         for(int stage : stages) {
         	if(stage <= N) {
         		stop[stage] ++;
         		
-        		for(int i=1; i<stage; i++) {
-        			pass[i] ++;
+        		for(int i=1; i<=stage; i++) {
+        			challenge[i] ++;
         		}
         	} else { // 모든 스테이지를 통과한 유저 : N+1
         		for(int i=1; i<=N; i++) {
-        			pass[i] ++;
+        			challenge[i] ++;
         		}
         	}
         }
-        
-        /*for(int i=0; i<N; i++) {
-        	System.out.println("pass: " + pass[i+1]);
-        	System.out.println("stop: " + stop[i+1]);
-        }*/
-        
-        //실패율 = STOP/PASS
+      //실패율 = STOP/PASS
         for(int i=0; i<N; i++) {
-        	System.out.println(stop[i+1]);
-        	System.out.println(pass[i+1]);
-        	double fail = stop[i+1] / pass[i+1];
-        	System.out.println(fail);
-        	map.put(i, fail);
+        	double fail = stop[i+1] / challenge[i+1];
+        	//System.out.println("i: " + (i+1) + " fail: " + fail);
+        	ArrayList<Integer> list = new ArrayList<>();
+        	if(map.containsKey(fail)){
+        		list = map.get(fail);
+        		list.add(i+1);
+        	} else {
+        		list.add(i+1);
+        		map.put(fail, list);
+        	}
         }
-        
-        // value 기준으로 정렬 (comparator 이용)
-        Iterator it = sortByValue(map).iterator();
-       
-        System.out.println("------------sort 후 -------------");
-
-        while(it.hasNext()) {
-
-            int temp = (int) it.next();
-
-           // System.out.println(temp + " = " + map.get(temp));
-
-
-        }
-        
-        //스테이지 도달 못하면 실패율 0 
-        
-        return answer;
-    }
+        ArrayList<Integer> answerList = new ArrayList<>();
+        ArrayList<Double> list = new ArrayList<>(map.keySet());
+        Collections.sort(list, Collections.reverseOrder());
+        list.forEach(k-> {
+        	ArrayList<Integer> arr = map.get(k);
+        	arr.forEach(val -> {
+        		answerList.add(val);
+        	});
+        });
+          
+        return answerList.stream().mapToInt(i -> i).toArray();
+	 }
 	 
-	// value로 sort!
-	public static List sortByValue(HashMap<Integer, Double> map) {
-		List<Integer> list = new ArrayList<Integer>();
-		list.addAll(map.keySet());
-		
-		Collections.sort(list, new Comparator() {
-			public int compare(Object o1, Object o2) {
-				Object v1 = map.get(o1);
-				Object v2 = map.get(o2);
-				
-				return ((Comparable)v2).compareTo(v1);
-			}
-		});
-		
-		Collections.reverse(list);
-		return list;
-	}
-	
 }
