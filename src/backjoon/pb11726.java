@@ -7,23 +7,32 @@ import java.io.InputStreamReader;
 // 2 x n 타일링
 public class pb11726 {
 
-	// 방법은 마지막 끝을 세로로 하나 아니면 가로로 두개 놓는 방법 둘 중 하나
+	/*
+	 * 모든 경우의 수는 오른쪽 타일링을 1*2 타일 2개로 채우던지 2*1 타일 한개로 채우는 방법을 합친 것!
+	 * 점화식 : d[n] = (d[n-1] + d[n-2]) % 10007
+	 * 10007 로 나눈 나머지 구하는 문제 ~.~ 꼭 문제 자세히 읽기..
+	 */
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int num = Integer.parseInt(br.readLine());
-		// 2 * (n-1) / 2 * (n-2)
-		System.out.println(sol(num)); 
 		
- 	}
-	
-	// top-down
-	public static int sol(int num) {
 		if(num == 1) {
-			return 1;
-		} else if(num == 2) {
-			return 2;
-		} else {
-			return sol(num - 1) + sol(num - 2);
+			System.out.println(1);
+			return;
 		}
+		if(num == 2) {
+			System.out.println(2);
+			return;
+		}
+		
+		int[] d = new int[num + 1];
+		d[1] = 1;
+		d[2] = 2;
+ 		
+		for(int i=3; i<=num; i++) {
+			d[i] = (d[i-1] + d[i-2]) % 10007;
+		}
+		System.out.println(d[num]);
 	}
 }
