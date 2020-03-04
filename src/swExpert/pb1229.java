@@ -8,7 +8,7 @@ import java.util.Arrays;
 // [S/W 문제해결 기본] 8일차 - 암호문2
 public class pb1229 {
 
-public static void main(String args[]) throws Exception {
+	public static void main(String args[]) throws Exception {
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -32,38 +32,36 @@ public static void main(String args[]) throws Exception {
 				if(orders[o].equals("D")) {
 					int x = Integer.parseInt(orders[o+1]);
 					int y = Integer.parseInt(orders[o+2]);
-					//delete (orders[o+3] ~ orders[o+y])
-					// x ,y (3)
-					o += 2 + y;
+					
+					// o+3 부터 삭제 -> o+2+y-(o+3)만큼
+					for(int cnt=0; cnt < y; cnt++) {
+						cryptograms.remove(x);
+					}
+					
+					// 삭제
+					//cryptograms.addAll(x, s);
+					
+					//delete (orders[o+3] ~ orders[o+3+y])
+					// x ,y 를 제외해야하므로 +2
+					o += 2;
 				} else if(orders[o].equals("I")) {
 					int x = Integer.parseInt(orders[o+1]);
 					int y = Integer.parseInt(orders[o+2]);
+					
+					ArrayList<String> s = new ArrayList<String>();
+					
+					// 배열의 orders[o+3] ~ orders[o+3+y-1]
+					for(int t=o+3; t<= o+y+2; t++) {
+						s.add(orders[t].replace(" ", ""));
+					}
+	
+					// 삽입할 위치에 s 배열리스트 추가
+					cryptograms.addAll(x, s);
 					//insert (orders[o+3] ~ orders[o+y])
-					// x ,y (3)
+					// x ,y, s길이 만큼 제외해야하므로 +(2 + y)
 					o += 2 + y;
 				} 
 			}
-		
-			
-			
-			// I(삽입) x, y, s
-//			for(int idx=1; idx<=orderCnt; idx++) {
-//				String order = orders[idx].trim();
-//				String[] orderStr = order.split(" ");
-//				
-//				int x = Integer.parseInt(orderStr[0]); // 삽입할 위치
-//				int y = Integer.parseInt(orderStr[1]); // 삽입할 문자열의 개수
-//				
-//				ArrayList<String> s = new ArrayList<String>();
-//				// 배열의 2번째부터 s 시작됨 
-//				for(int t=2; t< orderStr.length; t++) {
-//					s.add(orderStr[t].replace(" ", ""));
-//				}
-//
-//				// 삽입할 위치에 s 배열리스트 추가
-//				cryptograms.addAll(x, s);
-//			}
-			
 			StringBuffer sb = new StringBuffer();
 			sb.append("#" + testCase);
 			
