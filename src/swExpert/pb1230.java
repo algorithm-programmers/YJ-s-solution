@@ -73,7 +73,6 @@ public static void main(String args[]) throws Exception {
 	
 					// 리스트의 끝에 s 배열리스트 추가
 					cryptograms.addAll(s);
-					//insert (orders[o+3] ~ orders[o+y])
 					// y, s길이 만큼 제외해야하므로 +(1 + y)
 					o += 1 + y;
 				}
